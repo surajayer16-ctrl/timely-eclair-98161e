@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ne">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NITVT Telecom & Optical Fiber Training Portal</title>
+    <meta name="description" content="Comprehensive CTEVT & NSTB Level-1/Level-2 Telecom & Optical Fiber Technician and Building Electrician training portal, interactive manuals, 90+ tools catalog, 64 electrical symbols, wiring circuits, interactive simulators, circuit calculators, and examination preparation system for Surendra Air, Lalitpur." />
+    <meta property="og:title" content="NITVT Telecom & Optical Fiber Training Portal" />
+    <meta property="og:description" content="Comprehensive CTEVT & NSTB Level-1/Level-2 Telecom & Optical Fiber Technician and Building Electrician training portal, interactive manuals, 90+ tools catalog, 64 electrical symbols, wiring circuits, interactive simulators, circuit calculators, and examination preparation system for Surendra Air, Lalitpur." />
+    
+    <style>
+      /* Prevent vite websocket error overlay from blocking UI */
+      vite-error-overlay {
+        display: none !important;
+      }
+    </style>
+    <script>
+      // Silence benign development HMR websocket connection errors in sandboxed preview iframes
+      (function() {
+        const isWebsocketError = function(msg) {
+          const s = String(msg || '').toLowerCase();
+          return s.includes('websocket') || s.includes('ws://') || s.includes('wss://') || s.includes('hmr') || s.includes('failed to connect to websocket');
+        };
+
+        // Filter console errors and warnings
+        const originalConsoleError = console.error;
+        console.error = function(...args) {
+          if (args.some(arg => isWebsocketError(typeof arg === 'object' ? JSON.stringify(arg) : arg))) {
+            return;
+          }
+          originalConsoleError.apply(console, args);
+        };
+
+        const originalConsoleWarn = console.warn;
+        console.warn = function(...args) {
+          if (args.some(arg => isWebsocketError(typeof arg === 'object' ? JSON.stringify(arg) : arg))) {
+            return;
+          }
+          originalConsoleWarn.apply(console, args);
+        };
+
+        // Capture phase listeners to prevent Vite overlay from intercepting the errors
+        window.addEventListener('unhandledrejection', function(event) {
+          const reason = event.reason;
+          const message = reason?.message || String(reason || '');
+          if (isWebsocketError(message)) {
+            event.preventDefault();
+            event.stopPropagation();
+            event.stopImmediatePropagation();
+          }
+        }, true);
+
+        window.addEventListener('error', function(event) {
+          const message = event.message || '';
+          if (isWebsocketError(message)) {
+            event.preventDefault();
+            event.stopPropagation();
+            event.stopImmediatePropagation();
+          }
+        }, true);
+
+        // Patch WebSocket to auto-prevent errors
+        const OriginalWebSocket = window.WebSocket;
+        if (OriginalWebSocket) {
+          const PatchedWebSocket = function(url, protocols) {
+            try {
+              const ws = new OriginalWebSocket(url, protocols);
+              ws.addEventListener('error', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+              });
+              return ws;
+            } catch (err) {
+              return {
+                addEventListener: function() {},
+                removeEventListener: function() {},
+                send: function() {},
+                close: function() {},
+                readyState: 3
+              };
+            }
+          };
+          PatchedWebSocket.prototype = OriginalWebSocket.prototype;
+          for (const key of Object.getOwnPropertyNames(OriginalWebSocket)) {
+            try {
+              Object.defineProperty(PatchedWebSocket, key, Object.getOwnPropertyDescriptor(OriginalWebSocket, key));
+            } catch (e) {}
+          }
+          window.WebSocket = PatchedWebSocket;
+        }
+      })();
+    </script>
+  </head>
+  <body class="bg-slate-950 text-slate-100 antialiased selection:bg-purple-600 selection:text-white">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

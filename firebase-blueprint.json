@@ -1,0 +1,42 @@
+{
+  "entities": {
+    "appContentDoc": {
+      "title": "Application Content Document",
+      "description": "Synced configuration and educational data across all devices.",
+      "type": "object",
+      "properties": {
+        "key": { "type": "string" },
+        "data": { "type": "string" },
+        "updatedAt": { "type": "number" },
+        "updatedBy": { "type": "string" }
+      },
+      "required": ["key", "data", "updatedAt"]
+    },
+    "spottingItem": {
+      "title": "Spotting Item",
+      "description": "An item used in a practical exam for spotting.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "number" },
+        "nameEnglish": { "type": "string" },
+        "nameNepali": { "type": "string" },
+        "category": { "type": "string" },
+        "purposeNepali": { "type": "string" },
+        "purposeEnglish": { "type": "string" },
+        "tipNepali": { "type": "string" },
+        "imageUrl": { "type": "string" }
+      },
+      "required": ["id", "nameNepali", "category"]
+    }
+  },
+  "firestore": {
+    "/app_content/{key}": {
+      "schema": "appContentDoc",
+      "description": "Universal cloud-synced documents for courses, notes, gallery, electrician data, exams, and settings."
+    },
+    "/spottingItems/{spottingItemId}": {
+      "schema": "spottingItem",
+      "description": "Collection of spotting items for practical exams."
+    }
+  }
+}

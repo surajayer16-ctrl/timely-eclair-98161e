@@ -1,0 +1,6 @@
+{
+  "name": "NITVT Telecom & Optical Fiber Training Portal",
+  "description": "Comprehensive CTEVT & NSTB Level-1/Level-2 Telecom & Optical Fiber Technician and Building Electrician training portal, interactive manuals, 90+ tools catalog, 64 electrical symbols, wiring circuits, interactive simulators, circuit calculators, and examination preparation system for Surendra Air, Lalitpur.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
